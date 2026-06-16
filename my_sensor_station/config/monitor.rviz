@@ -1,0 +1,39 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Views
+    Name: Views
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/LaserScan
+      Name: LaserScan
+      Enabled: true
+      Topic:
+        Value: /scan
+        Depth: 5
+      Size (Pixels): 3
+      Color Transformer: FlatColor
+      Color: 255; 0; 0
+      Style: Points
+    - Class: rviz_default_plugins/Range
+      Name: Ultrasonic
+      Enabled: true
+      Topic:
+        Value: /ultrasonic
+        Depth: 5
+      Color: 0; 255; 0
+  Global Options:
+    Fixed Frame: laser
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 10
+      Name: Current View
+Window Geometry:
+  Displays:
+    collapsed: false
+  Height: 800
+  Width: 1200

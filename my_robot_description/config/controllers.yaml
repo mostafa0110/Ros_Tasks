@@ -1,0 +1,44 @@
+# =============================================================================
+# controllers.yaml — ros2_control Controller Configuration
+# =============================================================================
+# This file is loaded by the Controller Manager (started inside Gazebo
+# via the gz_ros2_control or gazebo_ros2_control plugin).
+#
+# It tells the Controller Manager:
+#   1. Which controllers exist and their types
+#   2. Parameters for each controller (wheel names, dimensions, etc.)
+# =============================================================================
+
+controller_manager:
+  ros__parameters:
+    update_rate: 50  # Control loop frequency (Hz)
+    use_sim_time: true  # Use Gazebo simulation clock, not system clock
+
+    # --- Declare controllers to load ---
+    diff_drive_controller:
+      type: diff_drive_controller/DiffDriveController
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+# =============================================================================
+# diff_drive_controller: converts cmd_vel → individual wheel velocity commands
+# =============================================================================
+diff_drive_controller:
+  ros__parameters:
+    # Must match joint names in robot.urdf.xacro
+    left_wheel_names:  ["left_wheel_joint"]
+    right_wheel_names: ["right_wheel_joint"]
+
+    # Physical dimensions — must match URDF values
+    wheel_separation: 0.34  # Distance between left and right wheel centers (m)
+    wheel_radius:     0.1   # Wheel radius (m)
+
+    # Odometry settings
+    publish_rate:    50.0           # How often to publish /odom (Hz)
+    odom_frame_id:   odom           # Fixed world frame
+    base_frame_id:   base_footprint # Robot base frame
+
+    # false = expects geometry_msgs/Twist (standard, used by teleop_twist_keyboard)
+    # true  = expects geometry_msgs/TwistStamped (includes a timestamp header)
+    use_stamped_vel: false

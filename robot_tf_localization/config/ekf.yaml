@@ -1,0 +1,44 @@
+ekf_filter_node_odom:
+  ros__parameters:
+    frequency: 50.0
+    sensor_timeout: 0.3
+    two_d_mode: true
+    transform_time_offset: 0.0
+    transform_timeout: 0.3
+    print_diagnostics: true
+    debug: false
+
+    map_frame: map
+    odom_frame: odom
+    base_link_frame: base_footprint   # lab requirement
+    world_frame: odom                 # local EKF lives in odom
+    publish_tf: true                  # publishes odom → base_footprint
+
+    # ── odom0: /odometry/wheel ──────────────────────────────────────────
+    # Fuse: linear velocity X (vx) and angular velocity Z (vyaw)
+    # Fusion mask indices (15 values):
+    #   x     y     z | roll  pitch  yaw | vx    vy    vz | vroll vpitch vyaw | ax    ay    az
+    odom0: /odometry/wheel
+    odom0_config: [false, false, false,
+                   false, false, false,
+                   true,  false, false,
+                   false, false, true,
+                   false, false, false]
+    odom0_queue_size: 10
+    odom0_nodelay: false
+    odom0_differential: false
+    odom0_relative: false
+
+    # ── imu0: /imu/data ─────────────────────────────────────────────────
+    # Fuse: angular velocity Z (vyaw) only
+    imu0: /imu/data
+    imu0_config: [false, false, false,
+                  false, false, false,
+                  false, false, false,
+                  false, false, true,
+                  false, false, false]
+    imu0_nodelay: false
+    imu0_differential: false
+    imu0_relative: false
+    imu0_queue_size: 10
+    imu0_remove_gravitational_acceleration: true
